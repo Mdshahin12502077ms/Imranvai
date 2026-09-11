@@ -6,11 +6,15 @@ use App\Http\Controllers\Api\FrontendAdminSettingController;
 use App\Http\Controllers\Api\FrontendLandingPageController;
 use App\Http\Controllers\Api\FrontendProductCondoditionController;
 use App\Http\Controllers\Api\FrontendProductController;
+use App\Http\Controllers\Api\MyorderController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\SubscriberController;
+use App\Http\Controllers\PayPalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -61,8 +65,19 @@ Route::middleware('auth:api')->group(function () {
    });
 
 
+   Route::controller(PayPalController::class)->group(function(){
+     Route::post('paypal/payment', 'handlePayment')->name('paypal.create-payment');
+     Route::get('paypal/success', 'paymentSuccess')->name('paypal.success');
+     Route::get('paypal/cancel', 'paymentCancel')->name('paypal.cancel');
+   });
+
    Route::controller(FrontendProductCondoditionController::class)->group(function(){
      Route::get('product-conditions', 'index')->name('productCondition.index');
+   });
+
+   Route::controller(MyorderController::class)->group(function(){
+     Route::get('my-orders', 'index')->name('my-orders.index');
+     Route::get('my-orders/{order}', 'show')->name('my-orders.show');
    });
 
    Route::get('admin-data', [FrontendAdminSettingController::class, 'getAdminData'])->name('admin-data');

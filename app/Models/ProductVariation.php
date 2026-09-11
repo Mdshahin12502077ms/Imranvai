@@ -25,4 +25,9 @@ class ProductVariation extends Model
     {
         return $this->hasMany(TechnicalSpecification::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

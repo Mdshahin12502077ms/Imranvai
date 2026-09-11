@@ -26,4 +26,16 @@ class Product extends Model
     {
         return $this->hasMany(TechnicalSpecification::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function orderedQuantities()
+    {
+        return $this->hasMany(Order::class)
+                    ->where('order_status', '!=', 'cancelled')
+                    ->withSum('productVariation', 'stock');
+    }
 }

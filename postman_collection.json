@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
 		"name": "Imranvai API Collection",
-		"description": "Postman Collection for Imranvai E-Commerce & Landing Page API",
+		"description": "Postman Collection for Imranvai E-Commerce, My Orders & PayPal Payment API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -49,7 +49,9 @@
 							"script": {
 								"exec": [
 									"var jsonData = pm.response.json();",
-									"if (jsonData.token) {",
+									"if (jsonData.access_token) {",
+									"    pm.environment.set(\"token\", jsonData.access_token);",
+									"} else if (jsonData.token) {",
 									"    pm.environment.set(\"token\", jsonData.token);",
 									"}"
 								],
@@ -394,6 +396,200 @@
 								"api",
 								"pages",
 								"contact-us-message"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "PayPal Payment (Auth Required)",
+			"item": [
+				{
+					"name": "Create PayPal Payment Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": 1,\n    \"product_variation_id\": 1,\n    \"quantity\": 1,\n    \"sub_total\": 100.00,\n    \"tax\": 0.00,\n    \"discount\": 0.00,\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"john@example.com\",\n    \"country_region\": \"Bangladesh\",\n    \"address_line_one\": \"Dhaka, Bangladesh\",\n    \"sub_burb\": \"Gulshan\",\n    \"state\": \"Dhaka\",\n    \"post_code\": \"1212\",\n    \"notes\": \"Handle with care\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/paypal/payment",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paypal",
+								"payment"
+							]
+						}
+					}
+				},
+				{
+					"name": "PayPal Payment Success Callback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/paypal/success?token=PAYPAL_PAYMENT_TOKEN",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paypal",
+								"success"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "PAYPAL_PAYMENT_TOKEN"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "PayPal Payment Cancel Callback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/paypal/cancel",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paypal",
+								"cancel"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "My Orders (Auth Required)",
+			"item": [
+				{
+					"name": "Get My Orders List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/my-orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"my-orders"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Single Order Details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/my-orders/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"my-orders",
+								"1"
 							]
 						}
 					}

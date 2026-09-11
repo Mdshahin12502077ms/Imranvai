@@ -3,18 +3,29 @@
 use App\Http\Controllers\Backend\Farhad\CategoryController;
 use App\Http\Controllers\Backend\Farhad\ContactMessageController as BackendContactMessageController;
 use App\Http\Controllers\Backend\Farhad\DashboardController;
+use App\Http\Controllers\Backend\Farhad\EveryconditionTermController;
+use App\Http\Controllers\Backend\Farhad\LandingPage\BannerController;
+use App\Http\Controllers\Backend\Farhad\LandingPage\FeatureController;
+use App\Http\Controllers\Backend\Farhad\LandingPage\TaglineBarController;
+use App\Http\Controllers\Backend\Farhad\LandingPage\WhyEvSystemController;
 use App\Http\Controllers\Backend\Farhad\StatusController;
 use App\Http\Controllers\Backend\Setting\AdminSettingController;
 use App\Http\Controllers\Backend\Setting\MailSettingController;
 use App\Http\Controllers\Backend\Setting\ManagerController;
+use App\Http\Controllers\Backend\Setting\PayPalSettingController;
 use App\Http\Controllers\Backend\Setting\ProfileSettingController;
 use App\Http\Controllers\Backend\Setting\SocialSettingController;
 use App\Http\Controllers\Backend\Setting\StripeSettingController;
 use App\Http\Controllers\Backend\Setting\SystemSettingController;
-use App\Http\Controllers\Backend\Farhad\EveryconditionTermController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductVariationCController;
 use Illuminate\Support\Facades\Route;
+
+
+
+
+
 
 
 
@@ -82,6 +93,15 @@ Route::middleware(['auth:web', 'role:admin,manager'])->prefix('admin')->name('ad
         Route::delete('product-variations/spec/{id}', 'destroySpec')->name('product-variations.destroySpec');
     });
 
+    ////////////////////////////order //////////////////
+
+    Route::controller(OrderController::class)->group(function(){
+        Route::get('orders', 'index')->name('orders.index');
+        Route::get('orders/{order}', 'show')->name('orders.show');
+        Route::delete('orders/{order}', 'destroy')->name('orders.destroy');
+        Route::post('orders/status/{id}', 'statusUpdate')->name('orders.statusUpdate');
+    });
+
         Route::controller(EveryconditionTermController::class)->group(function(){
         Route::get('product-conditions', 'index')->name('productCondition.index');
         Route::get('product-conditions/create', 'create')->name('productCondition.create');
@@ -134,9 +154,9 @@ Route::middleware(['auth:web', 'role:admin,manager'])->prefix('admin')->name('ad
     Route::get('settings/mail', [MailSettingController::class, 'edit'])->name('mail-settings.edit');
     Route::post('settings/mail', [MailSettingController::class, 'update'])->name('mail-settings.update');
 
-    // Stripe Settings routes
-    Route::get('settings/stripe', [StripeSettingController::class, 'edit'])->name('stripe-settings.edit');
-    Route::post('settings/stripe', [StripeSettingController::class, 'update'])->name('stripe-settings.update');
+    // PayPal Settings routes
+    Route::get('settings/paypal', [PayPalSettingController::class, 'edit'])->name('paypal-settings.edit');
+    Route::post('settings/paypal', [PayPalSettingController::class, 'update'])->name('paypal-settings.update');
 
     // System Settings routes
     Route::get('settings/system', [SystemSettingController::class, 'edit'])->name('system-settings.edit');

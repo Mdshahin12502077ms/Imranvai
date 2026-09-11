@@ -162,6 +162,25 @@
                      </div>
                  </li>
 
+                 {{--order--}}
+                 <li class="nav-item">
+                     <a class="nav-link menu-link {{ request()->routeIs('admin.orders.*') ? '' : 'collapsed' }}" href="#sidebarOrder" data-bs-toggle="collapse" role="button"
+                         aria-expanded="{{ request()->routeIs('admin.orders.*') ? 'true' : 'false' }}" aria-controls="sidebarOrder">
+                         <i class="ri-folder-line"></i> <span>Order</span>
+                     </a>
+                     <div class="collapse menu-dropdown {{ request()->routeIs('admin.orders.*') ? 'show' : '' }}" id="sidebarOrder">
+                         <ul class="nav nav-sm flex-column">
+
+                             <li class="nav-item">
+                                 <a href="{{ route('admin.orders.index') }}" class="nav-link {{ request()->routeIs('admin.orders.index') ? 'active' : '' }}">
+                                     All Orders
+                                 </a>
+                             </li>
+                         </ul>
+                     </div>
+                 </li>
+
+
                  {{-- Built Every Condition --}}
 
                  {{-- Every Condition  --}}
@@ -197,14 +216,14 @@
 
                  {{-- Settings Section --}}
                  <li class="nav-item">
-                     <a class="nav-link menu-link {{ request()->routeIs('admin.profile-settings.*') || request()->routeIs('admin.managers.*') || request()->routeIs('admin.social-settings.*') || request()->routeIs('admin.stripe-settings.*') || request()->routeIs('admin.admin-settings.*') || request()->routeIs('admin.system-settings.*') || request()->routeIs('admin.mail-settings.*') ? '' : 'collapsed' }}"
+                     <a class="nav-link menu-link {{ request()->routeIs('admin.profile-settings.*') || request()->routeIs('admin.managers.*') || request()->routeIs('admin.social-settings.*') || request()->routeIs('admin.paypal-settings.*') || request()->routeIs('admin.stripe-settings.*') || request()->routeIs('admin.admin-settings.*') || request()->routeIs('admin.system-settings.*') || request()->routeIs('admin.mail-settings.*') ? '' : 'collapsed' }}"
                          href="#sidebarSettings" data-bs-toggle="collapse" role="button"
-                         aria-expanded="{{ request()->routeIs('admin.profile-settings.*') || request()->routeIs('admin.managers.*') || request()->routeIs('admin.social-settings.*') || request()->routeIs('admin.stripe-settings.*') || request()->routeIs('admin.admin-settings.*') || request()->routeIs('admin.system-settings.*') || request()->routeIs('admin.mail-settings.*') ? 'true' : 'false' }}"
+                         aria-expanded="{{ request()->routeIs('admin.profile-settings.*') || request()->routeIs('admin.managers.*') || request()->routeIs('admin.social-settings.*') || request()->routeIs('admin.paypal-settings.*') || request()->routeIs('admin.stripe-settings.*') || request()->routeIs('admin.admin-settings.*') || request()->routeIs('admin.system-settings.*') || request()->routeIs('admin.mail-settings.*') ? 'true' : 'false' }}"
                          aria-controls="sidebarSettings">
                          <i class="ri-settings-3-line"></i> <span>Settings</span>
                      </a>
 
-                     <div class="collapse menu-dropdown {{ request()->routeIs('admin.profile-settings.*') || request()->routeIs('admin.managers.*') || request()->routeIs('admin.social-settings.*') || request()->routeIs('admin.stripe-settings.*') || request()->routeIs('admin.admin-settings.*') || request()->routeIs('admin.system-settings.*') || request()->routeIs('admin.mail-settings.*') ? 'show' : '' }}"
+                     <div class="collapse menu-dropdown {{ request()->routeIs('admin.profile-settings.*') || request()->routeIs('admin.managers.*') || request()->routeIs('admin.social-settings.*') || request()->routeIs('admin.paypal-settings.*') || request()->routeIs('admin.stripe-settings.*') || request()->routeIs('admin.admin-settings.*') || request()->routeIs('admin.system-settings.*') || request()->routeIs('admin.mail-settings.*') ? 'show' : '' }}"
                          id="sidebarSettings">
 
                          <ul class="nav nav-sm flex-column">
@@ -231,10 +250,10 @@
                                  </a>
                              </li>
 
-                             {{-- Stripe Settings --}}
+                             {{-- PayPal Settings --}}
                              <li class="nav-item">
-                                 <a href="{{ route('admin.stripe-settings.edit') }}" class="nav-link {{ request()->routeIs('admin.stripe-settings.*') ? 'active' : '' }}">
-                                     <i class="ri-mail-settings-line"></i> <span>Stripe Settings</span>
+                                 <a href="{{ route('admin.paypal-settings.edit') }}" class="nav-link {{ request()->routeIs('admin.paypal-settings.*') ? 'active' : '' }}">
+                                     <i class="ri-paypal-line"></i> <span>PayPal Settings</span>
                                  </a>
                              </li>
 
